@@ -44,7 +44,7 @@ GuiDisplay_Episodes.start = function(title,url,selectedItem,topLeftItem) {
 	
 	if (this.ItemData.Items.length > 0) {
 		
-		document.getElementById("pageContent").innerHTML = "<div id=allOptions class='EpisodesAllOptions'><span id='playAll' style='padding-right:35px'>Play All</span><span id='shuffleAll'>Shuffle All</span></div><div id=Content class='EpisodesList'></div>" +
+		document.getElementById("pageContent").innerHTML = "<div id=allOptions class='EpisodesAllOptions'><span id='playAll' onmouseover='GuiDisplay_Episodes.updateSelectedBannerItemOnMouseOver(0)' style='padding-right:35px'>Play All</span><span id='shuffleAll' onmouseover='GuiDisplay_Episodes.updateSelectedBannerItemOnMouseOver(1)' >Shuffle All</span></div><div id=Content class='EpisodesList'></div>" +
 		"<div id='EpisodesSeriesInfo' class='EpisodesSeriesInfo'></div>" + 
 		"<div id='EpisodesImage' class='EpisodesImage'></div>" + 
 		"<div id='EpisodesInfo' class='EpisodesInfo'>" +
@@ -110,24 +110,24 @@ GuiDisplay_Episodes.updateDisplayedItems = function() {
 		if (this.ItemData.Items[index].UserData.Played == true) {
 			if (this.ItemData.Items[index].ImageTags.Primary) {			
 				var imgsrc = Server.getImageURL(this.ItemData.Items[index].Id,"Primary",100,46,0,false,0);	
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleWatched'>"+ title +"</div><div class='ShowListSingleWatched'></div></div>";
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleWatched'>"+ title +"</div><div class='ShowListSingleWatched'></div></div>";
 			} else {
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleWatched'>"+ title +"</div><div class='ShowListSingleWatched'></div></div>";
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleWatched'>"+ title +"</div><div class='ShowListSingleWatched'></div></div>";
 			}
 		}else if (this.ItemData.Items[index].LocationType == "Virtual"){
 			imageMissingOrUnaired = (Support.FutureDate(this.ItemData.Items[index].PremiereDate) == true) ? "ShowListSingleUnaired" : "ShowListSingleMissing";	
 			if (this.ItemData.Items[index].ImageTags.Primary) {			
 				var imgsrc = Server.getImageURL(this.ItemData.Items[index].Id,"Primary",100,46,0,false,0);	
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleVirtual'>"+ title +"</div><div class='"+imageMissingOrUnaired+"'></div></div>";
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleVirtual'>"+ title +"</div><div class='"+imageMissingOrUnaired+"'></div></div>";
 			} else {
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleVirtual'>"+ title +"</div><div class='"+imageMissingOrUnaired+"'></div></div>";
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitleVirtual'>"+ title +"</div><div class='"+imageMissingOrUnaired+"'></div></div>";
 			}
 		} else {
 			if (this.ItemData.Items[index].ImageTags.Primary) {			
 				var imgsrc = Server.getImageURL(this.ItemData.Items[index].Id,"Primary",100,46,0,false,0);	
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitle'>"+ title +"</div></div>"; // 
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage' style=background-image:url(" +imgsrc+ ")></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitle'>"+ title +"</div></div>"; // 
 			} else {  //
-				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitle'>"+ title +"</div></div>";
+				htmlToAdd += "<div id=" + this.ItemData.Items[index].Id + " onmouseover='GuiDisplay_Episodes.updateSelectedItemOnMouseOver("+index+")' class='EpisodeListSingle'><div class='EpisodeListSingleImage'></div><div id=title_" + this.ItemData.Items[index].Id + " class='EpisodeListSingleTitle'>"+ title +"</div></div>";
 			}
 		}
 	}
@@ -243,6 +243,21 @@ GuiDisplay_Episodes.updateSelectedBannerItems = function() {
 		document.getElementById("playAll").style.color = "#f9f9f9";
 		document.getElementById("shuffleAll").style.color = "#f9f9f9";
 	}
+}
+
+GuiDisplay_Episodes.updateSelectedItemOnMouseOver = function(index) {
+	alert("UpdateSelectedItemOnMouseOver called with index "+index);
+	this.selectedItem = index;
+	this.updateSelectedBannerItems();
+	this.updateSelectedItems();
+}
+
+GuiDisplay_Episodes.updateSelectedBannerItemOnMouseOver = function(bannerItem) {
+	alert("updateSelectedBannerItemOnMouseOver called with bannerItem "+bannerItem);
+	this.selectedItem = -1;
+	this.selectedBannerItem = bannerItem;
+	this.updateSelectedBannerItems();
+	this.updateSelectedItems();
 }
 
 GuiDisplay_Episodes.keyDown = function() {
